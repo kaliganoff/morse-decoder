@@ -38,7 +38,35 @@ const MORSE_TABLE = {
 };
 
 function decode(expr) {
-    // write your solution here
+    let morseSymbols = expr.replaceAll('**********', '**').match(/.{1,2}/g);
+    let result = '';
+    for (symbol of morseSymbols) {
+        switch (symbol) {
+            case '**':
+                result += '     ';
+                break;
+            case '00':
+                result += '&';
+                break;
+            case '10':
+                result += '.';
+                break;
+            case '11':
+                result += '-';
+                break;
+        }
+    }
+    let symbols = result.match(/.{1,5}/g);
+    let finalResult = '';
+    for (symbol of symbols) {
+        if (symbol === '     ') {
+            finalResult += ' ';
+        } else {
+        symbol = symbol.replaceAll('&', '');
+        finalResult += MORSE_TABLE[symbol];
+        }
+    }
+    return finalResult;
 }
 
 module.exports = {
